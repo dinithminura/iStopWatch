@@ -1,8 +1,16 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+jest.useFakeTimers();
+
+const getTimeText = () => {
+  const minutes = screen.getByTestId('minutes').textContent;
+  const seconds = screen.getByTestId('seconds').textContent;
+  const milliseconds = screen.getByTestId('milliseconds').textContent;
+  return `${minutes}${seconds}${milliseconds}`;
+};
+
+test('initial render shows 00:00.00', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(getTimeText()).toBe('00:00.00');
 });
